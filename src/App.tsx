@@ -40,7 +40,7 @@ function App() {
         />
       </div>
       {/* Content */}
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-10">
         {/* Header */}
         <div className="flex justify-between items-center">
           <div className="flex flex-col">
