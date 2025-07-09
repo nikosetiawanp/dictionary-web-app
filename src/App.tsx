@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import "./App.css";
 
 import Logo from "./assets/images/logo.svg";
@@ -8,14 +7,6 @@ import IconSearch from "./assets/images/icon-search.svg";
 import IconPlay from "./assets/images/icon-play.svg";
 
 function App() {
-  function ThemeToggle() {
-    const [dark, setDark] = useState(false);
-
-    useEffect(() => {
-      document.documentElement.classList.toggle("dark", dark);
-    }, [dark]);
-  }
-
   return (
     // Container
     <div className="flex flex-col gap-6 w-full max-w-[735px] h-full">
