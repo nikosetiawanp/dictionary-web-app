@@ -5,8 +5,33 @@ import IconArrowDown from "./assets/images/icon-arrow-down.svg";
 import IconMoon from "./assets/images/icon-moon.svg";
 import IconSearch from "./assets/images/icon-search.svg";
 import IconPlay from "./assets/images/icon-play.svg";
+import { useEffect, useState } from "react";
 
 function App() {
+  const API_BASE_URL = "https://api.dictionaryapi.dev/api/v2/entries/en/";
+  const [input, setInput] = useState("");
+  const [inputError, setInputError] = useState(true);
+  const [data, setData] = useState(null);
+
+  const search = () => {
+    if (!input) {
+      setInputError(true);
+      return;
+    }
+
+    fetch(API_BASE_URL + input)
+      .then((res) => res.json())
+      .then(setData);
+  };
+
+  useEffect(() => {
+    setInputError(false);
+  }, [input]);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
   return (
     // Container
     <div className="flex flex-col gap-6 w-full max-w-[735px] h-full">
@@ -20,32 +45,50 @@ function App() {
         {/* Vertical line */}
         <div className="flex w-[0.5px] h-full border border-border-light bg-border-light"></div>
         {/* Toggle switch */}
-        <div className="flex items-center p-1 rounded-full bg-secondary-light w-[40px] h-[20px]">
+        <div className="flex items-center p-[3px] rounded-full bg-secondary-light w-[40px] h-[20px]">
           <div className="w-[14px] h-[14px] bg-[#FFF] rounded-full"></div>
         </div>
         <img src={IconMoon} alt="icon-moon" />
       </div>
 
       {/* Search bar */}
-      <div className="relative">
+      <div className="relative md:mb-4">
         <input
           type="text"
-          className="w-full bg-[#f4f4f4] border border-[#f4f4f4] active:border-accent rounded-2xl h-[48px] font-bold text-[16px] md:text-[20px] placeholder:text-primary-light/25 px-6"
+          className={`${
+            inputError ? "border-error" : "border-[#f4f4f4]"
+          } w-full bg-[#f4f4f4] border active:border-accent rounded-2xl h-[48px] md:h-[64px] font-bold text-[16px] md:text-[20px] placeholder:text-primary-light/25 px-6`}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
           placeholder="Search for any word..."
+          onSubmit={() => search()}
         />
-        <img
-          className="absolute right-4 top-1/3 w-[15.55px]"
-          src={IconSearch}
-          alt="icon-search"
-        />
+        {inputError && (
+          <span className="text-error text-[16px] md:text-[20px] absolute left-0 -bottom-6 md:-bottom-7">
+            Whoops, can’t be empty…
+          </span>
+        )}
+
+        <div className="absolute top-0 right-0 md:right-3 h-full flex items-center">
+          <button
+            onClick={() => search()}
+            className="hover:bg-accent/10 active:bg-accent/20 top-0 flex justify-center items-center p-3 rounded-full hover:cursor-pointer"
+          >
+            <img className="w-[15.55px]" src={IconSearch} alt="icon-search" />
+          </button>
+        </div>
       </div>
       {/* Content */}
       <div className="flex flex-col gap-10">
         {/* Header */}
         <div className="flex justify-between items-center">
-          <div className="flex flex-col">
-            <h1 className="text-heading-large text-primary-light">keyboard</h1>
-            <h2 className="text-heading-medium text-accent">/ˈkiːbɔːd/</h2>
+          <div className="flex flex-col gap-0 md:gap-4">
+            <h1 className="text-[32px] md:text-[64px] text-heading-large text-primary-light">
+              keyboard
+            </h1>
+            <h2 className="text-body-medium md:text-[24px] text-accent">
+              /ˈkiːbɔːd/
+            </h2>
           </div>
           <button className="bg-accent/20 flex justify-center items-center rounded-full w-[75px] h-[75px] hover:cursor-pointer">
             <img src={IconPlay} alt="icon-play" />
@@ -54,23 +97,27 @@ function App() {
 
         {/* Divider */}
         <div className="flex items-center gap-4 w-full">
-          <h3 className="text-heading-medium text-primary-light">noun</h3>
+          <h3 className="font-bold text-[18px] md:text-[24px] italic md:not-italic text-primary-light">
+            noun
+          </h3>
           <hr className="h-[1px] border-[#e9e9e9] w-full" />
         </div>
 
         {/* Noun */}
         <div className="flex flex-col gap-6">
-          <h4 className="text-heading-small text-secondary-light">Meaning</h4>
+          <h4 className="text-[16px] md:text-[20px] text-secondary-light">
+            Meaning
+          </h4>
           <ul className="flex flex-col gap-2 list-disc pl-10 marker:text-accent">
-            <li className="text-body-medium text-primary-light pl-4">
+            <li className="text-[15px] md:text-[18px] leading-[24px] text-primary-light pl-4">
               (etc.) A set of keys used to operate a typewriter, computer etc.
             </li>
-            <li className="text-body-medium text-primary-light pl-4">
+            <li className="text-[15px] md:text-[18px] leading-[24px] text-primary-light pl-4">
               A component of many instruments including the piano, organ, and
               harpsichord consisting of usually black and white keys that cause
               different tones to be produced when struck.
             </li>
-            <li className="text-body-medium text-primary-light pl-4">
+            <li className="text-[15px] md:text-[18px] leading-[24px] text-primary-light pl-4">
               A device with keys of a musical keyboard, used to control
               electronic sound-producing devices which may be built into or
               separate from the keyboard device.
@@ -79,7 +126,9 @@ function App() {
         </div>
         {/* Synonyms */}
         <div className="flex items-center gap-10">
-          <h4 className="text-heading-small text-secondary-light">Synonyms</h4>
+          <h4 className="text-[16px] md:text-[20px] text-secondary-light">
+            Synonyms
+          </h4>
           <span className="text-[16px] md:text-[20px] font-bold text-accent">
             electronic keyboard
           </span>
@@ -87,18 +136,22 @@ function App() {
 
         {/* Divider */}
         <div className="flex items-center gap-4 w-full">
-          <h3 className="text-heading-medium text-primary-light">verb</h3>
+          <h3 className="font-bold text-[18px] md:text-[24px] italic md:not-italic text-primary-light">
+            noun
+          </h3>
           <hr className="h-[1px] border-[#e9e9e9] w-full" />
         </div>
 
         {/* Verb */}
         <div className="flex flex-col gap-6">
-          <h4 className="text-heading-small text-secondary-light">Meaning</h4>
+          <h4 className="text-[16px] md:text-[20px] text-secondary-light">
+            Meaning
+          </h4>
           <ul className="flex flex-col gap-2 list-disc pl-10 marker:text-accent">
-            <li className="text-body-medium text-primary-light pl-4">
+            <li className="text-[15px] md:text-[18px] leading-[24px] text-primary-light pl-4">
               To type on a computer keyboard.
             </li>
-            <span className="ml-4 text-body-medium text-secondary-light">
+            <span className="ml-4 text-[15px] md:text-[18px] leading-[24px] text-secondary-light">
               “Keyboarding is the part of this job I hate the most.”
             </span>
           </ul>
