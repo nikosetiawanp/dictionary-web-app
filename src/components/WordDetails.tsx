@@ -2,18 +2,20 @@ import IconPlay from "../assets/images/icon-play.svg";
 import type { Data } from "../types/Data";
 import HorizontalLine from "./HorizontalLine";
 
-export default function WordDetails(props: { data: null | Data[] }) {
+export default function WordDetails(props: { selectedData: null | Data }) {
   return (
     // Content
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-10 ">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div className="flex flex-col gap-0 md:gap-4">
           <h1 className="text-[32px] md:text-[64px] text-heading-large text-primary-light">
-            {props.data && props.data[0].word}
+            {props.selectedData?.word}
+            {/* {props.data && props.data[0].word} */}
           </h1>
           <h2 className="text-body-medium md:text-[24px] text-accent">
-            {props.data && props.data[0].phonetic}
+            {props.selectedData?.phonetic}
+            {/* {props.data && props.data[0].phonetic} */}
           </h2>
         </div>
         <button className="bg-accent/20 flex justify-center items-center rounded-full w-[75px] h-[75px] hover:cursor-pointer">
