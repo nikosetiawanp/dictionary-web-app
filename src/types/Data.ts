@@ -1,21 +1,23 @@
-type License = {
+export type License = {
   name: string;
   url: string;
 };
 
-type Definition = {
+export type Definition = {
   definition: string;
   example: string;
   synonyms: string[];
   antonyms: string[];
 };
 
-type Meaning = {
+export type Meaning = {
   partOfSpeech: string;
   definitions: Definition[];
+  synonyms: string[];
+  antonyms: string[];
 };
 
-type Phonetic = {
+export type Phonetic = {
   text: string;
   audio: string;
   sourceUrl: string;

@@ -1,5 +1,5 @@
 import IconPlay from "../assets/images/icon-play.svg";
-import type { Data } from "../types/Data";
+import type { Data, Definition, Meaning } from "../types/Data";
 import HorizontalLine from "./HorizontalLine";
 
 export default function WordDetails(props: { selectedData: null | Data }) {
@@ -11,11 +11,9 @@ export default function WordDetails(props: { selectedData: null | Data }) {
         <div className="flex flex-col gap-0 md:gap-4">
           <h1 className="text-[32px] md:text-[64px] text-heading-large text-primary-light">
             {props.selectedData?.word}
-            {/* {props.data && props.data[0].word} */}
           </h1>
           <h2 className="text-body-medium md:text-[24px] text-accent">
             {props.selectedData?.phonetic}
-            {/* {props.data && props.data[0].phonetic} */}
           </h2>
         </div>
         <button className="bg-accent/20 flex justify-center items-center rounded-full w-[75px] h-[75px] hover:cursor-pointer">
@@ -24,66 +22,52 @@ export default function WordDetails(props: { selectedData: null | Data }) {
       </div>
 
       {/* Divider */}
-      <div className="flex items-center gap-4 w-full">
-        <h3 className="font-bold text-[18px] md:text-[24px] italic md:not-italic text-primary-light">
-          noun
-        </h3>
-        <HorizontalLine />
-      </div>
 
-      {/* Noun */}
-      <div className="flex flex-col gap-6">
-        <h4 className="text-[16px] md:text-[20px] text-secondary-light">
-          Meaning
-        </h4>
-        <ul className="flex flex-col gap-2 list-disc pl-10 marker:text-accent">
-          <li className="text-[15px] md:text-[18px] leading-[24px] text-primary-light pl-4">
-            (etc.) A set of keys used to operate a typewriter, computer etc.
-          </li>
-          <li className="text-[15px] md:text-[18px] leading-[24px] text-primary-light pl-4">
-            A component of many instruments including the piano, organ, and
-            harpsichord consisting of usually black and white keys that cause
-            different tones to be produced when struck.
-          </li>
-          <li className="text-[15px] md:text-[18px] leading-[24px] text-primary-light pl-4">
-            A device with keys of a musical keyboard, used to control electronic
-            sound-producing devices which may be built into or separate from the
-            keyboard device.
-          </li>
-        </ul>
-      </div>
-      {/* Synonyms */}
-      <div className="flex items-center gap-10">
-        <h4 className="text-[16px] md:text-[20px] text-secondary-light">
-          Synonyms
-        </h4>
-        <span className="text-[16px] md:text-[20px] font-bold text-accent">
-          electronic keyboard
-        </span>
-      </div>
+      {props.selectedData?.meanings?.map((meaning: Meaning, index) => (
+        <div key={index} className="flex flex-col gap-4">
+          <div className="flex items-center gap-4 w-full">
+            <h3 className="font-bold text-[18px] md:text-[24px] italic md:not-italic text-primary-light">
+              {meaning.partOfSpeech}
+            </h3>
+            <HorizontalLine />
+          </div>
 
-      {/* Divider */}
-      <div className="flex items-center gap-4 w-full">
-        <h3 className="font-bold text-[18px] md:text-[24px] italic md:not-italic text-primary-light">
-          verb
-        </h3>
-        <HorizontalLine />
-      </div>
-
-      {/* Verb */}
-      <div className="flex flex-col gap-6">
-        <h4 className="text-[16px] md:text-[20px] text-secondary-light">
-          Meaning
-        </h4>
-        <ul className="flex flex-col gap-2 list-disc pl-10 marker:text-accent">
-          <li className="text-[15px] md:text-[18px] leading-[24px] text-primary-light pl-4">
-            To type on a computer keyboard.
-          </li>
-          <span className="ml-4 text-[15px] md:text-[18px] leading-[24px] text-secondary-light">
-            “Keyboarding is the part of this job I hate the most.”
-          </span>
-        </ul>
-      </div>
+          {/* Noun */}
+          <div className="flex flex-col gap-6">
+            <h4 className="text-[16px] md:text-[20px] text-secondary-light">
+              Meaning
+            </h4>
+            <ul className="flex flex-col gap-2 list-disc pl-10 marker:text-accent">
+              {meaning.definitions.map((definition: Definition, index) => (
+                <li
+                  key={index}
+                  className="text-[15px] md:text-[18px] leading-[24px] text-primary-light pl-4"
+                >
+                  {definition?.definition}
+                </li>
+              ))}
+            </ul>
+            {meaning.synonyms?.length > 0 && (
+              <div className="flex items-start gap-10">
+                <h4 className="text-[16px] md:text-[20px] text-secondary-light">
+                  Synonyms
+                </h4>
+                <div className="flex gap-1 flex-wrap">
+                  {meaning.synonyms.map((synonym, index) => (
+                    <span
+                      key={index}
+                      className="text-[16px] md:text-[20px] font-bold text-accent hover:cursor-pointer hover:underline"
+                    >
+                      {synonym}
+                      {index !== meaning.synonyms.length - 1 ? "," : ""}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
 
       <HorizontalLine />
 
@@ -93,7 +77,7 @@ export default function WordDetails(props: { selectedData: null | Data }) {
           className="text-body-small text-primary-light"
           href="https://en.wiktionary.org/wiki/keyboard"
         >
-          https://en.wiktionary.org/wiki/keyboard
+          {props.selectedData?.sourceUrls[0]}
         </a>
       </div>
     </div>

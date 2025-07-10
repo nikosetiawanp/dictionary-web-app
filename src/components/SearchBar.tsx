@@ -86,15 +86,18 @@ export default function SearchBar(props: {
               </div>
             </div>
           ) : (
-            props.data?.map((data: Data) => (
+            props.data?.map((data: Data, index) => (
               <div
+                key={index}
                 onClick={() => selectWord(data)}
-                className="flex gap-4 hover:bg-[#e9e9e9] px-4 py-1 rounded-lg hover:cursor-pointer"
+                className="flex items-center gap-4 hover:bg-[#e9e9e9] px-4 py-1 rounded-lg hover:cursor-pointer overflow-hidden"
               >
                 <span className="text-[16px] md:text-[20px] font-bold">
                   {data.word}
                 </span>
-                <p className="text-[15px] md:text-[18px] text-secondary-light"></p>
+                <p className="text-[15px] md:text-[18px] text-secondary-light whitespace-nowrap">
+                  {data.meanings[0].definitions[0].definition}
+                </p>
               </div>
             ))
           )}
