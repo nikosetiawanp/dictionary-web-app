@@ -74,8 +74,8 @@ export default function WordDetails(props: { selectedData: null | Data }) {
       <div className="flex items-center gap-8">
         <span className="text-body-small text-secondary-light">Source</span>
         <a
-          className="text-body-small text-primary-light"
-          href="https://en.wiktionary.org/wiki/keyboard"
+          className="text-body-small text-primary-light hover:text-accent"
+          href={props.selectedData?.sourceUrls[0]}
         >
           {props.selectedData?.sourceUrls[0]}
         </a>
