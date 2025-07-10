@@ -26,8 +26,6 @@ function App() {
     fetch(API_BASE_URL + input)
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
-
         if (Array.isArray(result)) {
           setData(result);
           setSearchError(null);
@@ -47,7 +45,7 @@ function App() {
 
   return (
     // Container
-    <div className="flex flex-col gap-6 w-screen max-w-[735px] h-full p-6 pb-24">
+    <div className="flex flex-col gap-10 w-screen max-w-[735px] h-full p-6 pb-24">
       {/* Header */}
       <Header />
       {/* Search bar */}
