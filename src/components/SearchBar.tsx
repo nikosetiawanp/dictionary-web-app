@@ -17,7 +17,7 @@ export default function SearchBar(props: {
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const formRef = useRef<HTMLDivElement | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const selectWord = (data: Data) => {
     props.setSelectedData(data);
@@ -50,7 +50,7 @@ export default function SearchBar(props: {
   }, []);
 
   return (
-    <form className="relative md:mb-4">
+    <form className="relative md:mb-4" ref={formRef}>
       <input
         type="text"
         className={`w-full bg-[#f4f4f4] border border-[#f4f4f4] ${
@@ -63,27 +63,17 @@ export default function SearchBar(props: {
         onClick={() => {
           if (props.input) setMenuOpen(true);
         }}
+        onMouseDown={() => {
+          if (props.input) setMenuOpen(true);
+        }}
       />
-      {/* {props.inputError && (
-        <span className="text-error text-[16px] md:text-[20px] absolute left-0 -bottom-6 md:-bottom-7">
-          Whoops, can’t be empty…
-        </span>
-      )} */}
 
-      <div className="absolute top-0 right-0 md:right-3 h-full flex items-center">
-        <button
-          onClick={() => props.search()}
-          className="hover:bg-accent/10 active:bg-accent/20 top-0 flex justify-center items-center p-3 rounded-full hover:cursor-pointer"
-        >
-          <img className="w-[15.55px]" src={IconSearch} alt="icon-search" />
-        </button>
+      <div className="absolute top-0 right-0 mr-4 md:right-3 h-full flex items-center">
+        <img className="w-[15.55px]" src={IconSearch} alt="icon-search" />
       </div>
 
       {menuOpen && props.input !== "" && (
-        <div
-          ref={formRef}
-          className="border border-[#f4f4f4] absolute top-12 md:top-16 w-full p-4 bg-[#ffffff] rounded-2xl shadow-lg flex flex-col gap-0"
-        >
+        <div className="border border-[#f4f4f4] absolute top-14 md:top-18 w-full py-4 bg-[#ffffff] rounded-2xl shadow-lg flex flex-col gap-0">
           {props.searchError && (
             <div className="flex flex-col items-center gap-2 px-4 py-1 rounded-lg">
               <img
@@ -107,7 +97,7 @@ export default function SearchBar(props: {
               <div
                 key={index}
                 onClick={() => selectWord(data)}
-                className="flex items-center gap-4 hover:bg-[#e9e9e9] px-4 py-1 rounded-lg hover:cursor-pointer overflow-hidden"
+                className="flex items-center gap-4 hover:bg-[#e9e9e9] px-4 py-1 rounded-sm hover:cursor-pointer overflow-hidden"
               >
                 <span className="text-[16px] md:text-[20px] font-bold">
                   {data.word}
@@ -119,7 +109,7 @@ export default function SearchBar(props: {
             ))}
 
           {loading && !props.data && !props.searchError && (
-            <span className="text-[15px] md:text-[18px] text-secondary-light">
+            <span className="text-[15px] md:text-[18px] text-secondary-light ml-4">
               Searching...
             </span>
           )}

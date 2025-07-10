@@ -50,7 +50,6 @@ function App() {
     <div className="flex flex-col gap-6 w-screen max-w-[735px] h-full p-6 pb-24">
       {/* Header */}
       <Header />
-
       {/* Search bar */}
       <SearchBar
         search={search}
@@ -60,7 +59,7 @@ function App() {
         setSelectedData={setSelectedData}
         searchError={searchError}
       />
-
+      {/* Content */}
       {selectedData && <WordDetails selectedData={selectedData} />}
     </div>
   );
