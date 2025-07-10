@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import IconSearch from "../assets/images/icon-search.svg";
 import type { Data } from "../types/Data";
@@ -10,50 +10,65 @@ export default function SearchBar(props: {
   search: () => void;
   input: string;
   setInput: React.Dispatch<React.SetStateAction<string>>;
-  inputError: boolean;
+  // inputError: boolean;
   data: Data[] | null;
   setSelectedData: React.Dispatch<React.SetStateAction<Data | undefined>>;
   searchError: NotFound | null;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const formRef = useRef<HTMLDivElement | null>(null);
+
   const selectWord = (data: Data) => {
     props.setSelectedData(data);
     setMenuOpen(false);
   };
 
   useEffect(() => {
+    setLoading(true);
     setMenuOpen(true);
-  }, [props.data, props.searchError]);
 
-  useEffect(() => {
     const timeout = setTimeout(() => {
-      if (props.input) props.search();
+      props.search();
     }, 500);
 
     return () => clearTimeout(timeout);
   }, [props.input]);
+
+  // Close when clicking outside the menu
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (formRef.current && !formRef.current.contains(event.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        props.search();
-      }}
-      className="relative md:mb-4"
-    >
+    <form className="relative md:mb-4">
       <input
         type="text"
-        className={`${
-          props.inputError ? "border-error" : "border-[#f4f4f4]"
-        } w-full bg-[#f4f4f4] border active:border-accent rounded-2xl h-[48px] md:h-[64px] font-bold text-[16px] md:text-[20px] placeholder:text-primary-light/25 px-6`}
+        className={`w-full bg-[#f4f4f4] border border-[#f4f4f4] ${
+          props.input && "border-accent"
+        } active:border-accent rounded-2xl h-[48px] md:h-[64px] font-bold text-[16px] md:text-[20px] placeholder:text-primary-light/25 px-6`}
+        defaultValue={""}
         value={props.input}
         onChange={(e) => props.setInput(e.target.value)}
         placeholder="Search for any word..."
+        onClick={() => {
+          if (props.input) setMenuOpen(true);
+        }}
       />
-      {props.inputError && (
+      {/* {props.inputError && (
         <span className="text-error text-[16px] md:text-[20px] absolute left-0 -bottom-6 md:-bottom-7">
           Whoops, can’t be empty…
         </span>
-      )}
+      )} */}
 
       <div className="absolute top-0 right-0 md:right-3 h-full flex items-center">
         <button
@@ -64,13 +79,13 @@ export default function SearchBar(props: {
         </button>
       </div>
 
-      {menuOpen && (
-        <div className="border border-[#f4f4f4] absolute top-12 md:top-16 w-full p-4 bg-[#ffffff] rounded-2xl shadow-lg flex flex-col gap-0">
-          {props.searchError ? (
-            <div
-              onClick={() => {}}
-              className="flex flex-col items-center gap-2 hover:bg-[#e9e9e9] px-4 py-1 rounded-lg"
-            >
+      {menuOpen && props.input !== "" && (
+        <div
+          ref={formRef}
+          className="border border-[#f4f4f4] absolute top-12 md:top-16 w-full p-4 bg-[#ffffff] rounded-2xl shadow-lg flex flex-col gap-0"
+        >
+          {props.searchError && (
+            <div className="flex flex-col items-center gap-2 px-4 py-1 rounded-lg">
               <img
                 className="w-[60px] h-[60px]"
                 src={ConfusedIcon}
@@ -85,7 +100,9 @@ export default function SearchBar(props: {
                 </p>
               </div>
             </div>
-          ) : (
+          )}
+
+          {props.data &&
             props.data?.map((data: Data, index) => (
               <div
                 key={index}
@@ -99,7 +116,12 @@ export default function SearchBar(props: {
                   {data.meanings[0].definitions[0].definition}
                 </p>
               </div>
-            ))
+            ))}
+
+          {loading && !props.data && !props.searchError && (
+            <span className="text-[15px] md:text-[18px] text-secondary-light">
+              Searching...
+            </span>
           )}
         </div>
       )}

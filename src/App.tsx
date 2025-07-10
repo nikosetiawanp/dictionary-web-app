@@ -12,17 +12,16 @@ import type { Data } from "./types/Data";
 function App() {
   const API_BASE_URL = "https://api.dictionaryapi.dev/api/v2/entries/en/";
   const [input, setInput] = useState("");
-  const [inputError, setInputError] = useState(true);
 
   const [data, setData] = useState<null | Data[]>(null);
   const [searchError, setSearchError] = useState<null | NotFound>(null);
 
   const [selectedData, setSelectedData] = useState<Data>();
   const search = () => {
-    if (!input) {
-      setInputError(true);
-      return;
-    }
+    if (!input) return;
+
+    setSearchError(null);
+    setData(null);
 
     fetch(API_BASE_URL + input)
       .then((res) => res.json())
@@ -40,12 +39,11 @@ function App() {
   };
 
   useEffect(() => {
-    setInputError(false);
+    if (input == "") {
+      setData(null);
+      setSearchError(null);
+    }
   }, [input]);
-
-  useEffect(() => {
-    // console.log(data);
-  }, [data]);
 
   return (
     // Container
@@ -58,17 +56,12 @@ function App() {
         search={search}
         input={input}
         setInput={setInput}
-        inputError={inputError}
         data={data}
         setSelectedData={setSelectedData}
         searchError={searchError}
       />
 
       {selectedData && <WordDetails selectedData={selectedData} />}
-      {/* {searchError && <NotFoundMessage searchError={searchError} />}
-      {selectedData && !searchError && (
-        <WordDetails selectedData={selectedData} />
-      )} */}
     </div>
   );
 }
