@@ -101,7 +101,7 @@ export default function SearchBar(props: {
               <div
                 key={index}
                 onClick={() => selectWord(data)}
-                className="flex items-center gap-4 hover:bg-[#e9e9e9] dark:hover:bg-[#2d2d2d] active:bg-[#e9e9e9] dark:active:bg-[#2d2d2d] px-4 py-1 rounded-sm hover:cursor-pointer overflow-hidden"
+                className="flex items-center gap-4 hover:bg-[#e9e9e9] dark:hover:bg-[#2d2d2d] active:bg-[#e9e9e9] dark:active:bg-[#2d2d2d] px-4 py-2 rounded-sm hover:cursor-pointer overflow-hidden"
               >
                 <span className="text-[16px] md:text-[20px] font-bold text-primary-light dark:text-primary-dark">
                   {data.word}
