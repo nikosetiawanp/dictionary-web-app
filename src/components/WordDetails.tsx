@@ -91,7 +91,7 @@ export default function WordDetails(props: { selectedData: null | Data }) {
       <div className="flex items-center gap-8">
         <span className="text-body-small text-secondary-light">Source</span>
         <a
-          className="text-body-small text-primary-light dark:text-primary-dark hover:text-accent"
+          className="text-body-small text-primary-light dark:text-primary-dark hover:text-accent active:text-accent"
           href={props.selectedData?.sourceUrls[0]}
         >
           {props.selectedData?.sourceUrls[0]}
