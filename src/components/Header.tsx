@@ -10,7 +10,7 @@ export default function Header(props: {
     <div className="flex items-center gap-4 h-[32px]">
       <button
         className="hover:cursor-pointer"
-        onClick={() => (window.location.href = "/")}
+        onClick={() => (window.location.href = "/dictionary-web-app/")}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
