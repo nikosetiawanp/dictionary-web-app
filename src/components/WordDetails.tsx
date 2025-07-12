@@ -60,7 +60,7 @@ export default function WordDetails(props: {
                 {meaning.definitions.map((definition: Definition, index) => (
                   <li
                     key={index}
-                    className="text-[15px] md:text-[18px] leading-[24px] dark:font-light text-primary-light dark:text-primary-dark pl-4"
+                    className="text-[15px] md:text-[18px] leading-[24px] dark:font-light text-primary-light dark:text-primary-dark pl-2"
                   >
                     {definition?.definition}
                     {definition?.example && (
@@ -72,7 +72,7 @@ export default function WordDetails(props: {
                 ))}
               </ul>
               {meaning.synonyms?.length > 0 && (
-                <div className="flex items-start gap-10">
+                <div className="flex items-start gap-6">
                   <h4 className="text-[16px] md:text-[20px] text-secondary-light">
                     Synonyms
                   </h4>
