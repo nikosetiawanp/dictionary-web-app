@@ -2,7 +2,10 @@ import FontSelector from "./FontSelector";
 import ToggleThemeSwitch from "./ToggleThemeSwitch";
 import VerticalLine from "./VerticalLine";
 
-export default function Header() {
+export default function Header(props: {
+  font: string;
+  setFont: React.Dispatch<React.SetStateAction<string>>;
+}) {
   return (
     <div className="flex items-center gap-4 h-[32px]">
       {/* <img src={Logo} alt="logo" className="h-[32px] w-auto" /> */}
@@ -25,7 +28,7 @@ export default function Header() {
         </g>
       </svg>
       {/* Font select */}
-      <FontSelector />
+      <FontSelector font={props.font} setFont={props.setFont} />
       {/* Vertical line */}
       <VerticalLine />
       {/* Toggle switch */}
