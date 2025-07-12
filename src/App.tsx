@@ -11,6 +11,7 @@ import SearchBar from "./components/SearchBar";
 function App() {
   const [data, setData] = useState<Data[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [input, setInput] = useState("");
 
   return (
     // Container
@@ -18,10 +19,19 @@ function App() {
       {/* Header */}
       <Header />
       {/* Search bar */}
-      <SearchBar setData={setData} setSelectedIndex={setSelectedIndex} />
+      <SearchBar
+        setData={setData}
+        setSelectedIndex={setSelectedIndex}
+        input={input}
+        setInput={setInput}
+      />
       {/* Content */}
       {data.length > 0 && (
-        <WordDetails data={data} selectedIndex={selectedIndex} />
+        <WordDetails
+          data={data}
+          selectedIndex={selectedIndex}
+          setInput={setInput}
+        />
       )}
     </div>
   );

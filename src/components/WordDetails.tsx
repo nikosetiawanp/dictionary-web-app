@@ -5,6 +5,7 @@ import HorizontalLine from "./HorizontalLine";
 export default function WordDetails(props: {
   data: Data[];
   selectedIndex: number;
+  setInput: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const audio =
     props.data.length > 0 &&
@@ -80,6 +81,10 @@ export default function WordDetails(props: {
                       <span
                         key={index}
                         className="text-[16px] md:text-[20px] font-bold text-accent hover:cursor-pointer hover:underline"
+                        onClick={() => {
+                          props.setInput(synonym);
+                          window.scrollTo(0, 0);
+                        }}
                       >
                         {synonym}
                         {index !== meaning.synonyms.length - 1 ? "," : ""}
