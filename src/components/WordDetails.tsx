@@ -98,17 +98,21 @@ export default function WordDetails(props: {
         )
       )}
 
-      <HorizontalLine />
+      {props.data?.[props.selectedIndex] && (
+        <>
+          <HorizontalLine />
 
-      <div className="flex items-center gap-8">
-        <span className="text-body-small text-secondary-light">Source</span>
-        <a
-          className="text-body-small text-primary-light dark:text-primary-dark hover:text-accent active:text-accent"
-          href={props.data[props.selectedIndex]?.sourceUrls[0]}
-        >
-          {props.data[props.selectedIndex]?.sourceUrls[0]}
-        </a>
-      </div>
+          <div className="flex items-center gap-8">
+            <span className="text-body-small text-secondary-light">Source</span>
+            <a
+              className="text-body-small text-primary-light dark:text-primary-dark hover:text-accent active:text-accent"
+              href={props.data[props.selectedIndex]?.sourceUrls[0]}
+            >
+              {props.data[props.selectedIndex]?.sourceUrls[0]}
+            </a>
+          </div>
+        </>
+      )}
     </div>
   );
 }

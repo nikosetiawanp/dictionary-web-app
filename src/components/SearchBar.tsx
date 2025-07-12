@@ -12,7 +12,7 @@ export default function SearchBar(props: {
   input: string;
   setInput: React.Dispatch<React.SetStateAction<string>>;
 }) {
-  const API_BASE_URL = "https://api.dictionaryapi.dev/api/v2/entries/en/";
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [searchError, setSearchError] = useState<null | NotFound>(null);
   const [searchResult, setSearchResult] = useState<Data[]>([]);
