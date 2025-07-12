@@ -90,7 +90,7 @@ export default function SearchBar(props: {
         className={`w-full bg-[#f4f4f4] dark:bg-[#1f1f1f] border border-[#f4f4f4] dark:border-[#1f1f1f] ${
           input && "border-accent dark:border-accent"
         } active:border-accent focus:outline-accent focus:ring-0 rounded-2xl h-[48px] md:h-[64px] font-bold text-[16px] md:text-[20px] text-primary-light dark:text-primary-dark placeholder:text-primary-light/25 dark:placeholder:text-[#fff]/25 px-6`}
-        defaultValue={""}
+        // defaultValue={""}
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder="Search for any word..."

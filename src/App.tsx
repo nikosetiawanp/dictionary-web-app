@@ -14,7 +14,7 @@ function App() {
 
   return (
     // Container
-    <div className="flex flex-col gap-10 w-screen max-w-[735px] h-full p-6 pb-24">
+    <div className="flex flex-col gap-10 w-screen max-w-[735px] h-full p-6 pb-14">
       {/* Header */}
       <Header />
       {/* Search bar */}

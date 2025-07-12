@@ -30,12 +30,14 @@ export default function WordDetails(props: {
             {props.data[props.selectedIndex]?.phonetic}
           </h2>
         </div>
-        <button
-          className="bg-accent/20 active:bg-accent/40 flex justify-center items-center rounded-full w-[75px] h-[75px] hover:cursor-pointer"
-          onClick={playAudio}
-        >
-          <img src={IconPlay} alt="icon-play" />
-        </button>
+        {audio && (
+          <button
+            className="bg-accent/20 active:bg-accent/40 flex justify-center items-center rounded-full w-[75px] h-[75px] hover:cursor-pointer"
+            onClick={playAudio}
+          >
+            <img src={IconPlay} alt="icon-play" />
+          </button>
+        )}
       </div>
 
       {props.data[props.selectedIndex]?.meanings?.map(
