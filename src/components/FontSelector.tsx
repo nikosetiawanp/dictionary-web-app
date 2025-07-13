@@ -60,7 +60,7 @@ export default function FontSelector(props: {
       {open && (
         <div
           ref={dropdownRef}
-          className="flex flex-col absolute right-0 top-6 py-3 rounded-2xl border border-[#f4f4f4] dark:border-[#1f1f1f] bg-[#ffffff] dark:bg-[#1f1f1f] shadow-2xl dark:shadow-accent z-50 w-[185px]"
+          className="flex flex-col absolute right-0 top-6 py-3 rounded-2xl bg-[#ffffff] dark:bg-[#1f1f1f] shadow-2xl dark:shadow-accent z-50 w-[185px]"
         >
           {fonts.map((font, index) => (
             <div

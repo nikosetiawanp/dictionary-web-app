@@ -111,7 +111,7 @@ export default function SearchBar(props: {
       </div>
 
       {menuOpen && props.input !== "" && (
-        <div className="border border-[#f4f4f4] dark:border-[#1f1f1f] absolute top-14 md:top-18 w-full py-4 bg-[#ffffff] dark:bg-[#1f1f1f] rounded-2xl shadow-lg dark:shadow-2xl dark:shadow-accent flex flex-col gap-0">
+        <div className="absolute top-14 md:top-18 w-full py-4 bg-[#ffffff] dark:bg-[#1f1f1f] rounded-2xl shadow-lg dark:shadow-2xl dark:shadow-accent flex flex-col gap-0">
           {searchError && !loading && (
             <div className="flex flex-col items-center gap-2 px-4 py-1 rounded-lg">
               <img
